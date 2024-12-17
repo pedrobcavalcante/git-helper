@@ -5,11 +5,10 @@
 
 CONFIG_FILE=".git-helper-config"
 
-
 function init_git_project() {
     echo "Inicializando o projeto Git Helper..."
     
-    # Verificação se o Git já foi inicializado
+    # Verifica se o Git já foi inicializado
     if [ -d ".git" ]; then
         echo "Aviso: Este repositório já foi inicializado. Continuando..."
     else
@@ -29,10 +28,15 @@ function init_git_project() {
     read develop_branch
     develop_branch=${develop_branch:-develop}
     
+    echo -n "Digite o nome da branch de release (apenas informativo, padrão: release): "
+    read release_branch
+    release_branch=${release_branch:-release}
+    
     # Salva as configurações no arquivo
     echo "feature_prefix=$feature_prefix" > "$CONFIG_FILE"
     echo "prod_branch=$prod_branch" >> "$CONFIG_FILE"
     echo "develop_branch=$develop_branch" >> "$CONFIG_FILE"
+    echo "release_branch=$release_branch" >> "$CONFIG_FILE"
     
     echo "Configuração concluída! Configurações salvas em '$CONFIG_FILE'."
 }
