@@ -1,0 +1,3 @@
+feature_prefix=feature/
+prod_branch=main
+develop_branch=develop
