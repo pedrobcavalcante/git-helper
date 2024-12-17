@@ -5,20 +5,21 @@
 
 CONFIG_FILE=".git-helper-config"
 
+
 function init_git_project() {
-    # Verifica se o Git já foi inicializado
+    echo "Inicializando o projeto Git Helper..."
+    
+    # Verificação se o Git já foi inicializado
     if [ -d ".git" ]; then
         echo "Aviso: Este repositório já foi inicializado. Continuando..."
     else
-        # Inicializa o repositório Git
-        echo "Inicializando repositório Git..."
         git init
     fi
     
-    # Pergunta ao usuário o nome das branches
-    echo -n "Digite o nome da branch de release (somente salva, padrão: release): "
-    read release_branch
-    release_branch=${release_branch:-release}
+    # Pergunta ao usuário as configurações
+    echo -n "Digite o prefixo padrão para features (padrão: feature/): "
+    read feature_prefix
+    feature_prefix=${feature_prefix:-feature/}
     
     echo -n "Digite o nome da branch de produção (padrão: main): "
     read prod_branch
@@ -28,17 +29,14 @@ function init_git_project() {
     read develop_branch
     develop_branch=${develop_branch:-develop}
     
-    # Salva o nome da branch de release no arquivo de configuração
-    echo "Salvando configurações..."
-    echo "release_branch=$release_branch" > "$CONFIG_FILE"
+    # Salva as configurações no arquivo
+    echo "feature_prefix=$feature_prefix" > "$CONFIG_FILE"
+    echo "prod_branch=$prod_branch" >> "$CONFIG_FILE"
+    echo "develop_branch=$develop_branch" >> "$CONFIG_FILE"
     
-    # Criação das branches necessárias
-    create_branch "$prod_branch"
-    create_branch "$develop_branch"
-    
-    echo "Configuração concluída! Branches '$prod_branch' e '$develop_branch' verificadas/criadas."
-    echo "O nome da branch de release foi salvo em '$CONFIG_FILE'."
+    echo "Configuração concluída! Configurações salvas em '$CONFIG_FILE'."
 }
+
 
 # Função para criar branches (com verificação de existência)
 function create_branch() {
