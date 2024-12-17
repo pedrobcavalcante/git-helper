@@ -15,7 +15,7 @@ function main() {
             init_git_project
         ;;
         feature)
-            feature "$2"
+            feature "${@:2}"
         ;;
         *)
             echo "Uso: git h [subcomando]"
@@ -31,7 +31,7 @@ function main() {
 function feature() {
     case "$1" in
         start)
-            start_feature
+            start_feature "${@:2}"
         ;;
         *)
             echo "Uso: git h feature [subcomando]"
